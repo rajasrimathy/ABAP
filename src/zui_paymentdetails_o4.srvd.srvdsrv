@@ -1,0 +1,7 @@
+@EndUserText.label: 'Payment Details'
+define service ZUI_PAYMENTDETAILS_O4 {
+  expose ZC_PAYMENTDETAILS;
+  expose ZC_STATUSLOG;
+  expose ZC_PAYMENTLOG;
+  expose ZC_INSTRUMENTLIST;
+}

@@ -1,0 +1,158 @@
+managed implementation in class zbp_r_paymentdetails unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZR_PAYMENTDETAILS alias _Details
+persistent table zpaymentdetails
+draft table zpaymentdel_d
+etag master ZLastchangedate
+lock master total etag ZLocallastchangedate
+authorization master ( global )
+{
+  field ( readonly )
+  ZPaymentUuid;
+
+  field ( numbering : managed )
+  ZPaymentUuid;
+
+  create; update; delete;
+
+  action SendPaymentDetails;
+  action Status;
+  side effects
+  {
+    action SendPaymentDetails affects entity _Log, entity _InstrumentLog, field ZPaymentstatus , field ZPaymentmessageid ,  field ZPaymentsync;
+    action Status affects entity _StatusLog , entity _InstrumentLog , field ZStatussync , field ZBankProcessedStatus;
+  }
+
+  determination encrypt on save { create; }
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zpaymentdetails
+    {
+      ZPaymentUuid          = z_payment_uuid;
+      ZPaymentFileReference = z_paymentfilereference;
+      ZFileContent          = z_filecontent;
+      ZEncryptedfile        = z_encryptedfile;
+      ZPaymentmessageid     = z_paymentmessageid;
+      ZPaymentsync          = z_paymentsync;
+      ZStatussync           = z_statussync;
+      ZPaymentstatus        = z_paymentstatus;
+      ZPaymentstatuscode    = z_paymentstatuscode;
+      ZBankProcessedStatus  = z_bankprocessedstatus;
+      ZMessagesourcecode    = z_messagesourcecode;
+      ZClientcode           = z_clientcode;
+      ZCreatedby            = z_createdby;
+      ZCreatedate           = z_createdate;
+      ZLastchangedby        = z_lastchangedby;
+      ZLastchangedate       = z_lastchangedate;
+      ZLocallastchangedate  = z_locallastchangedate;
+    }
+
+  association _Log { create; with draft; }
+  association _StatusLog { create; with draft; }
+  association _InstrumentLog { create; with draft; }
+
+}
+
+define behavior for ZR_PAYMENTLOG alias _Log
+persistent table zpaymentlog
+draft table zpaymentlog_d
+lock dependent by _Details
+authorization dependent by _Details
+etag master ZLastchangedate
+{
+  field ( readonly )
+  ZPaymentUuid,
+  ZPaymentLogUuid;
+
+  field ( numbering : managed )
+  ZPaymentLogUuid;
+
+  update; delete;
+
+  mapping for zpaymentlog
+    {
+      ZPaymentLogUuid      = z_paymentlog_uuid;
+      ZPaymentUuid         = z_payment_uuid;
+      ZResponsecode        = z_responsecode;
+      ZResponse            = z_response;
+      ZCreatedby           = z_createdby;
+      ZCreatedate          = z_createdate;
+      ZLastchangedby       = z_lastchangedby;
+      ZLastchangedate      = z_lastchangedate;
+      ZLocallastchangedate = z_locallastchangedate;
+    }
+
+  association _Details { with draft; }
+}
+
+define behavior for ZR_STATUSLOG alias _StatusLog
+persistent table zstatuslog
+draft table zstatuslog_d
+lock dependent by _Details
+authorization dependent by _Details
+etag master ZLastchangedate
+{
+  field ( readonly )
+  ZPaymentUuid,
+  ZStatuslogUuid;
+
+  field ( numbering : managed )
+  ZStatuslogUuid;
+
+  update; delete;
+
+  mapping for zstatuslog
+    {
+      ZStatuslogUuid       = z_statuslog_uuid;
+      ZPaymentUuid         = z_payment_uuid;
+      ZResponsecode        = z_responsecode;
+      ZResponse            = z_response;
+      ZCreatedby           = z_createdby;
+      ZCreatedate          = z_createdate;
+      ZLastchangedby       = z_lastchangedby;
+      ZLastchangedate      = z_lastchangedate;
+      ZLocallastchangedate = z_locallastchangedate;
+    }
+
+  association _Details { with draft; }
+}
+
+define behavior for ZR_INSTRUMENTLIST alias _InstrumentLog
+persistent table zinstrumentlist
+draft table zinsmentlist_d
+lock dependent by _Details
+authorization dependent by _Details
+etag master ZLastchangedate
+{
+  field ( readonly )
+  ZPaymentUuid,
+  ZInstrumentUuid;
+
+  field ( numbering : managed )
+  ZInstrumentUuid;
+
+  update; delete;
+
+  mapping for zinstrumentlist
+    {
+      ZInstrumentUuid      = z_instrument_uuid;
+      ZPaymentUuid         = z_payment_uuid;
+      ZMessageid           = z_messageid;
+      ZStatuscode          = z_statuscode;
+      ZStatusremark        = z_statusremark;
+      ZCreatedby           = z_createdby;
+      ZCreatedate          = z_createdate;
+      ZLastchangedby       = z_lastchangedby;
+      ZLastchangedate      = z_lastchangedate;
+      ZLocallastchangedate = z_locallastchangedate;
+    }
+
+  association _Details { with draft; }
+}

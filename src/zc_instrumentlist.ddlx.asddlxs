@@ -1,0 +1,67 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Instrument List' 
+    //typeNamePlural: 'Instrument Lists'
+  }
+}
+annotate view ZC_INSTRUMENTLIST with 
+{
+   @UI.facet: [ {
+    id: 'idIdentification', 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'Instrument List', 
+    position: 10 
+  } ]
+  @UI.hidden: true
+  ZInstrumentUuid;
+    
+  @UI.lineItem: [ {
+    position: 20 , 
+    importance: #HIGH, 
+    label: 'Instrument Reference No'
+  } ]
+  @UI.identification: [ {
+    position: 20 , 
+    label: 'Instrument Reference No'
+  } ]
+  ZMessageid;
+  
+      @UI.lineItem: [ {
+    position: 30 , 
+    importance: #HIGH, 
+    label: 'Status Code'
+  } ]
+  @UI.identification: [ {
+    position: 30 , 
+    label: 'Status Code'
+  } ]
+  ZStatuscode;
+  
+  
+      @UI.lineItem: [ {
+    position: 40 , 
+    importance: #HIGH, 
+    label: 'Status Remark'
+  } ]
+  @UI.identification: [ {
+    position: 40 , 
+    label: 'Status Remark'
+  } ]
+  ZStatusremark;
+  
+    @UI.hidden: true
+  ZPaymentUuid;
+  
+  //@UI.hidden: true
+     @UI.lineItem: [ {
+    position: 50 , 
+    importance: #HIGH, 
+    label: 'Last Change Date Time'
+  } ]
+  @UI.identification: [ {
+    position: 50 , 
+    label: 'Last Change Date Time'
+  } ]
+  ZLastchangedate;
+}

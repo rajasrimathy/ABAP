@@ -1,0 +1,188 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Payment',
+    typeNamePlural: 'Payments'
+  }
+}
+
+@UI.createHidden: true
+@UI.deleteHidden: true
+@UI.updateHidden: true
+
+annotate view ZC_PAYMENTDETAILS with
+{
+  @UI.facet: [
+  {
+    id:'idIdentification',
+    type: #IDENTIFICATION_REFERENCE,
+    label: 'Payment',
+    position: 10
+  },
+  {
+    id:'instrumentlog',
+    purpose:#STANDARD,
+    type: #LINEITEM_REFERENCE,
+    position: 20,
+    label: 'Instrument Lists',
+    targetElement: '_InstrumentLog'
+  },
+  {
+    id:'paymentlog',
+    purpose:#STANDARD,
+    type: #LINEITEM_REFERENCE,
+    position: 30,
+    label: 'Payment Logs',
+    targetElement: '_Log'
+  },
+  {
+    id:'stauslog',
+    purpose:#STANDARD,
+    type: #LINEITEM_REFERENCE,
+    position: 40,
+    label: 'Status Logs',
+    targetElement: '_StatusLog'
+  }
+  ]
+
+  @UI.hidden: true
+  @UI: {
+  lineItem:       [ { position: 50, importance: #HIGH }
+                    ,{ type: #FOR_ACTION, dataAction: 'SendPaymentDetails', label: 'Send Payment Details' }
+                    ,{ type: #FOR_ACTION, dataAction: 'Status', label: 'Get Status' }
+
+       ],
+  identification: [ { position: 50 }
+                   ,{ type: #FOR_ACTION, dataAction: 'SendPaymentDetails', label: 'Send Payment Details' }
+                   ,{ type: #FOR_ACTION, dataAction: 'Status', label: 'Get Status' }
+
+       ],
+    textArrangement: #TEXT_ONLY
+  }
+  ZPaymentUuid; 
+  
+
+  @UI.lineItem: [ {
+    position: 10 ,
+    importance: #HIGH,
+    inline: true,
+    label: 'Payment File Reference'
+  } ]
+  @UI.identification: [ {
+    position: 10 ,
+    label: 'Payment File Reference'
+  } ]
+  ZPaymentFileReference;
+
+
+  @UI.identification: [{
+   position: 20,
+   label: 'Message Source Code'
+  }]
+  ZMessagesourcecode;
+
+  @UI.identification: [{
+   position: 30,
+   label: 'Client Code'
+  }]
+  ZClientcode;
+
+
+  @UI.identification: [{
+  position: 40,
+  label: 'Payment Message Id'
+  }]
+  ZPaymentmessageid;
+
+//    @UI.identification: [{
+//    position: 50,
+//    label: 'File Content'
+//    }]
+//    ZFileContent;
+//  
+//    @UI.identification: [{
+//    position: 60,
+//    label: 'Encrypted File Content'
+//    }]
+//    ZEncryptedfile;
+
+
+  @UI.lineItem: [ {
+      position: 30 ,
+      importance: #HIGH,
+      inline: true,
+      label: 'Payment Status'
+     } ]
+  @UI.identification: [{
+   position: 70,
+   label: 'Payment Status'
+  }]
+  @Consumption.valueHelpDefinition: [{ entity:
+  {name: 'ZPAYMENTSTATUSDETAILS' , element: 'text' },
+  distinctValues: true
+  }]
+  ZPaymentstatus;
+
+  @UI.lineItem: [ {
+     position: 50 ,
+     importance: #HIGH,
+     inline: true,
+     label: 'Bank Processed Status'
+    } ]
+  @UI.identification: [{
+   position: 80,
+   label: 'Bank Processed Status'
+  }]
+  @Consumption.valueHelpDefinition: [{ entity:
+  {name: 'ZBANKSTATUSDETAILS' , element: 'text' },
+  distinctValues: true
+  }]
+  ZBankProcessedStatus;
+
+  @UI.lineItem: [ {
+       position: 70 ,
+       importance: #HIGH,
+       inline: true,
+       label: 'Created On'
+      } ]
+  @UI.identification: [{
+     position: 90,
+     label: 'Created On'
+  }]
+  ZCreatedate;
+
+  @UI.lineItem: [ {
+       position: 90 ,
+       importance: #HIGH,
+       inline: true,
+       label: 'Changed On'
+      } ]
+  @UI.identification: [{ position: 100,
+   label: 'Changed On' }]
+  ZLastchangedate;
+
+  @UI.lineItem: [ {
+     position: 20 ,
+     importance: #HIGH,
+     inline: true,
+     label: 'Payment Sync'
+    } ]
+  @UI.identification: [{
+   position: 110,
+   label: 'Payment Sync'
+  }]
+  ZPaymentsync;
+
+  @UI.lineItem: [ {
+     position: 40 ,
+     importance: #HIGH,
+     inline: true,
+     label: 'Status Sync'
+    } ]
+  @UI.identification: [{
+   position: 120,
+   label: 'Status Sync'
+  }]
+  ZStatussync;
+
+}

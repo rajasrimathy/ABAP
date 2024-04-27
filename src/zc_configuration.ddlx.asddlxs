@@ -1,0 +1,66 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Configuration', 
+    typeNamePlural: 'Configurations'
+  }
+}
+annotate view ZC_CONFIGURATION with
+{
+  @UI.facet: [ {
+    id: 'idIdentification', 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'Configuration', 
+    position: 10 
+  } ]
+  @UI.hidden: true
+  ZConfigurationUUID;
+  
+  @UI.lineItem: [ {
+    position: 10 , 
+    importance: #HIGH, 
+    label: 'ID'
+  } ]
+  @UI.identification: [ {
+    position: 10 , 
+    label: 'ID'
+  } ]
+  ZID;
+  
+  @UI.lineItem: [ {
+    position: 40 , 
+    importance: #HIGH, 
+    label: 'Grant Type'
+  } ]
+  @UI.identification: [ {
+    position: 40 , 
+    label: 'Grant Type'
+  } ]
+  ZGrantType;
+  
+  @UI.lineItem: [ {
+    position: 20 , 
+    importance: #HIGH, 
+    label: 'Client ID'
+  } ]
+  @UI.identification: [ {
+    position: 20 , 
+    label: 'Client ID'
+  } ]
+  ZClientID;
+  
+  @UI.lineItem: [ {
+    position: 30 , 
+    importance: #HIGH, 
+    label: 'Client Secret'
+  } ]
+  @UI.identification: [ {
+    position: 30 , 
+    label: 'Client Secret'
+  } ]
+  ZClientSecret;
+
+  
+  @UI.hidden: true
+  ZLastchangedate;
+}

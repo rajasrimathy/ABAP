@@ -1,0 +1,46 @@
+managed implementation in class ZBP_R_CONFIGURATION unique;
+strict ( 2 );
+with draft;
+define behavior for ZR_CONFIGURATION
+persistent table zconfiguration
+draft table ZCONFIGURATION_D
+etag master ZLastchangedate
+lock master total etag ZLocallastchangedate
+authorization master( global )
+
+{
+  field ( readonly )
+   ZConfigurationUUID,
+   ZCreatedate,
+   ZCreatedby,
+   ZLocallastchangedate,
+   ZLastchangedate,
+   ZLastchangedby;
+
+  field ( numbering : managed )
+   ZConfigurationUUID;
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZCONFIGURATION
+  {
+    ZConfigurationUUID = z_configuration_uuid;
+    ZID = z_id;
+    ZGrantType = z_grant_type;
+    ZClientID = z_client_id;
+    ZClientSecret = z_client_secret;
+    ZCreatedby = z_createdby;
+    ZCreatedate = z_createdate;
+    ZLastchangedby = z_lastchangedby;
+    ZLastchangedate = z_lastchangedate;
+    ZLocallastchangedate = z_locallastchangedate;
+  }
+}
